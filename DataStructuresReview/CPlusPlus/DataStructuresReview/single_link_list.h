@@ -9,6 +9,8 @@ namespace datastructures
 	class SingleLinkList :
 		public ISingleLinkList<Object>, public IDataStructureTest
 	{
+		friend void TestOutputContents(SingleLinkList<char> list);
+
 	private:
 		class Node;
 
@@ -36,9 +38,6 @@ namespace datastructures
 
 	public:
 		const Object& first(void) const;
-
-	private:
-		void testOutputContents(void);
 
 	private:
 		int m_size;
@@ -118,8 +117,8 @@ namespace datastructures
 
 		while (ptrRunner != 0)
 		{
-			add(ptrRunner->ptrValue);
-			ptrRunner = ptrRunner->ptrNext;
+			add(*ptrRunner->m_ptrValue);
+			ptrRunner = ptrRunner->m_ptrNext;
 		}
 	}
 
@@ -240,26 +239,15 @@ namespace datastructures
 	template<typename Object>
 	inline void SingleLinkList<Object>::test(void)
 	{
-		//System.out.println("SingleLinkList______________________");
+		SingleLinkList<char> tmp;
+		cout << "SingleLinkList______________________" << endl;
+		cout << "is empty : " << tmp.isEmpty()<< endl;
+		cout << "adding letters a thru m to the list" << endl;
 
-		//System.out.println("is empty : " + isEmpty());
-		//System.out.println("adding letters a thru m to the list");
+		for (char k = 'a'; k <= 'm'; k++)
+			tmp.add(k);
 
-		//add('a');
-		//add('b');
-		//add('c');
-		//add('d');
-		//add('e');
-		//add('f');
-		//add('g');
-		//add('h');
-		//add('i');
-		//add('j');
-		//add('k');
-		//add('n');
-		//add('m');
-
-		//testOutputContents();
+		TestOutputContents(tmp);
 
 		//System.out.println("is empty : " + isEmpty());
 
@@ -296,24 +284,6 @@ namespace datastructures
 		//System.out.println("SingleLinkList______________________");
 	}
 
-
-	template<typename Object>
-	void SingleLinkList<Object>::testOutputContents(void) {
-		//System.out.print("count:" + size());
-
-		//Node runner = root;
-
-		//System.out.print(" contents:");
-
-		//while (runner != null) {
-		//	System.out.print(runner.getValue() + " ");
-
-		//	runner = runner.next;
-		//}
-
-		//System.out.println(" ");
-	}
-
 	template<typename Object>
 	inline bool SingleLinkList<Object>::isEmpty(void) const
 	{
@@ -330,6 +300,24 @@ namespace datastructures
 	inline const Object& SingleLinkList<Object>::first(void) const
 	{
 		return m_ptrRoot->getValue();
+	}
+
+	void TestOutputContents(SingleLinkList<char> list)
+	{
+		cout << "count:" << list.size();
+		SingleLinkList<char>::Node * ptrRunner = list.m_ptrRoot;
+
+		cout << " contents:";
+
+		//System.out.print(" contents:");
+
+		//while (runner != null) {
+		//	System.out.print(runner.getValue() + " ");
+
+		//	runner = runner.next;
+		//}
+
+		//System.out.println(" ");
 	}
 }
 

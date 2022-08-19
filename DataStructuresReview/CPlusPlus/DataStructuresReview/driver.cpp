@@ -12,5 +12,4 @@ int main()
 
 	pList->test();
 
-   cout << "Hello World!\n";
 }
