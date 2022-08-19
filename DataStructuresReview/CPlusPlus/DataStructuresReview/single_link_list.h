@@ -51,7 +51,7 @@ namespace datastructures
 
 		protected:
 			Node* m_ptrNext;
-			Object* m_ptrValue;
+			Object m_value;
 
 		public:
 			Node();
@@ -68,38 +68,34 @@ namespace datastructures
 
 	template<typename Object>
 	inline SingleLinkList<Object>::Node::Node(void) :
-		m_ptrNext(0), m_ptrValue(0)
+		m_ptrNext(0)
 	{
 	}
 
 	template<typename Object>
 	inline SingleLinkList<Object>::Node::Node(const Object& obj, Node* ptrRight)
 	{
-		m_ptrValue = new Object(obj);
+		m_value = obj;
 		m_ptrNext = ptrRight;
 	}
 
 	template<typename Object>
 	inline SingleLinkList<Object>::Node::Node(const Node& passByValueNode)
 	{
-		m_ptrValue = new Object(passByValueNode.getValue());
+		m_value = passByValueNode.m_value;
 		m_ptrNext = passByValueNode.m_ptrNext;
 	}
 
 	template<typename Object>
 	inline SingleLinkList<Object>::Node::~Node(void)
 	{
-		if (m_ptrValue != 0)
-		{
-			delete[] m_ptrValue;
-			m_ptrValue = 0;
-		}
+
 	}
 
 	template<typename Object>
 	inline const Object& SingleLinkList<Object>::Node::getValue(void) const
 	{
-		return *this->m_ptrValue;
+		return this->m_value;
 	}
 
 	template<typename Object>
@@ -118,7 +114,7 @@ namespace datastructures
 
 		while (ptrRunner != 0)
 		{
-			add(*ptrRunner->m_ptrValue);
+			add(ptrRunner->getValue());
 			ptrRunner = ptrRunner->m_ptrNext;
 		}
 	}
@@ -151,7 +147,9 @@ namespace datastructures
 			Node* ptrRunner = m_ptrRoot;
 
 			while (ptrRunner->m_ptrNext != 0)
+			{
 				ptrRunner = ptrRunner->m_ptrNext;
+			}
 
 			ptrRunner->m_ptrNext = new Node(obj, 0);
 			++m_size;
