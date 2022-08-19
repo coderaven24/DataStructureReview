@@ -187,14 +187,25 @@ namespace datastructures
 	template<typename Object>
 	inline void datastructures::DoubleLinkList<Object>::insertAfter(const Object& obj, const Object& after)
 	{
-		if (this->m_ptrTail != 0)
+		Node* ptrRunner = m_ptrHead;
+
+		while (ptrRunner != 0)
 		{
+			if (ptrRunner->m_value == after)
+			{
+				ptrRunner->m_ptrNext = new Node(obj, ptrRunner, ptrRunner->m_ptrNext);
 
+				if (ptrRunner->m_ptrNext->m_ptrNext != 0)
+					ptrRunner->m_ptrNext->m_ptrNext->m_ptrPrev = ptrRunner->m_ptrNext;
+
+				else
+					m_ptrTail = ptrRunner->m_ptrNext;
+
+				++m_size;
+			}
+
+			ptrRunner = ptrRunner->m_ptrNext;
 		}
-		else
-			m_ptrHead = m_ptrTail = new Node(obj, 0, 0);
-
-		++m_size;
 	}
 
 	template<typename Object>
@@ -213,54 +224,62 @@ namespace datastructures
 	inline void DoubleLinkList<Object>::test(void)
 	{
 		DoubleLinkList<char> tmp;
-		cout << "DoubleLinkList______________________" << endl;
-		cout << "is empty : " << tmp.isEmpty() << endl;
-		cout << "adding letters a thru n to the list" << endl;
+		cout << endl << "DoubleLinkList______________________" << endl;
+		cout << endl << "is empty : " << tmp.isEmpty() << endl;
+		cout << endl << "adding letters a thru n to the list" << endl;
 
 		for (char k = 'a'; k <= 'n'; k++)
 			tmp.add(k);
 
 		TestOutputContents(tmp);
 
-		cout << "is empty : " << tmp.isEmpty() << endl;
+		cout << endl << "is empty : " << tmp.isEmpty() << endl;
 
-		cout << "adding a 'y' to the end | ";
+		cout <<endl<< "adding a 'y' to the end";
 
 		tmp.addLast('y');
 
 		TestOutputContents(tmp);
 
-		cout << "removing e | ";
+		cout << endl << "removing e";
 
 		tmp.remove('e');
 
 		TestOutputContents(tmp);
 
-		cout << "removing m | ";
+		cout << endl << "removing m";
 
 		tmp.remove('m');
 
 		TestOutputContents(tmp);
 
-		cout << "adding z before f | ";
+		cout << endl << "adding z before f";
 
 		tmp.insertBefore('z', 'f');
 
 		TestOutputContents(tmp);
 
-		cout << "adding r before l | ";
+		cout << endl << "adding r before l";
 
 		tmp.insertBefore('r', 'l');
 
 		TestOutputContents(tmp);
 
-		cout << "adding q after z | ";
+		cout << endl << "adding q after z";
 
 		tmp.insertAfter('q', 'z');
 
 		TestOutputContents(tmp);
 
-		cout << "DoubleLinkList______________________" << endl;
+		cout << endl << "adding 3 after a";
+
+		tmp.insertAfter('3', 'a');
+
+		TestOutputContents(tmp);
+
+
+
+		cout << endl << "DoubleLinkList______________________" << endl;
 	}
 
 	template<typename Object>
@@ -289,16 +308,26 @@ namespace datastructures
 
 	inline void TestOutputContents(DoubleLinkList<char> list)
 	{
-		cout << "count:" << list.size();
+		cout <<endl<< "count:" << list.size() << endl;
 		DoubleLinkList<char>::Node* ptrRunner = list.m_ptrHead;
 
-		cout << " contents:";
+		cout<<"(head to Tail):";
 
 		while (ptrRunner != 0) {
 			cout << ptrRunner->getValue() << " ";
 
 			ptrRunner = ptrRunner->m_ptrNext;
 		}
+
+		cout << endl<<"(Tail to Head):";
+
+		ptrRunner = list.m_ptrTail;
+
+		while (ptrRunner != 0) {
+			cout << ptrRunner->getValue() << " ";
+			ptrRunner = ptrRunner->m_ptrPrev;
+		}
+
 
 		cout << endl;
 	}
