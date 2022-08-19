@@ -1,6 +1,9 @@
 #ifndef SINGLE_LINK_LIST_H
 #define SINGLE_LINK_LIST_H
 
+#include <iostream>
+using namespace std;
+
 #include "interfaces.h"
 
 namespace datastructures
@@ -57,7 +60,7 @@ namespace datastructures
 			Object m_value;
 
 		public:
-			Node();
+			Node(void);
 			Node(const Object& obj, Node* ptrRight);
 			Node(const Node& passByValueNode);
 
