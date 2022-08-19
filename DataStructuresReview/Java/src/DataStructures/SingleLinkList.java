@@ -71,7 +71,13 @@ public class SingleLinkList implements ISingleLinkList {
 
 		while (runner != null) {
 			if (before == runner.getValue()) {
-				previous.next = new Node(obj, previous.next);
+
+				if (previous != null)
+					previous.next = new Node(obj, previous.next);
+
+				else
+					root = new Node(obj, root);
+
 				++size;
 				return;
 			}
