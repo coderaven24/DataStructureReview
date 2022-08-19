@@ -250,13 +250,13 @@ namespace datastructures
 
 		TestOutputContents(tmp);
 
-		//System.out.println("is empty : " + isEmpty());
+		cout << "is empty : " << tmp.isEmpty() << endl;
 
-		//System.out.print("adding a 'y' to the end | ");
+		cout << "adding a 'y' to the end | ";
 
-		//addLast('y');
+		tmp.addLast('y');
 
-		//testOutputContents();
+		TestOutputContents(tmp);
 
 		//System.out.print("removing e | ");
 
