@@ -9,7 +9,7 @@ namespace datastructures
 	class SingleLinkList :
 		public ISingleLinkList<Object>, public IDataStructureTest
 	{
-		friend void TestOutputContents(SingleLinkList<char> list);
+		friend void TestOutputContents(const SingleLinkList<char>& list);
 
 	private:
 		class Node;
@@ -47,7 +47,7 @@ namespace datastructures
 		class Node
 		{
 			friend class SingleLinkList<Object>;
-			friend void TestOutputContents(SingleLinkList<char> list);
+			friend void TestOutputContents(const SingleLinkList<char>& list);
 
 		protected:
 			Node* m_ptrNext;
@@ -107,6 +107,11 @@ namespace datastructures
 	template<typename Object>
 	inline SingleLinkList<Object>::SingleLinkList(const SingleLinkList& passByValueList)
 	{
+		/// <summary>
+		/// THIS IS WRONG WILL POPULATE LIST BACKWARDS
+		/// </summary>
+		/// <typeparam name="Object"></typeparam>
+		/// <param name="passByValueList"></param>
 		m_size = 0;
 		m_ptrRoot = 0;
 
@@ -147,9 +152,7 @@ namespace datastructures
 			Node* ptrRunner = m_ptrRoot;
 
 			while (ptrRunner->m_ptrNext != 0)
-			{
 				ptrRunner = ptrRunner->m_ptrNext;
-			}
 
 			ptrRunner->m_ptrNext = new Node(obj, 0);
 			++m_size;
@@ -301,7 +304,7 @@ namespace datastructures
 		return m_ptrRoot->getValue();
 	}
 
-	void TestOutputContents(SingleLinkList<char> list)
+	void TestOutputContents(const SingleLinkList<char> & list)
 	{
 		cout << "count:" << list.size();
 		SingleLinkList<char>::Node * ptrRunner = list.m_ptrRoot;
