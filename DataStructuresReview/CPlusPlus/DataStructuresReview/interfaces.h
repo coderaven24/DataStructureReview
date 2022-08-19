@@ -9,7 +9,7 @@ namespace datastructures
 	class IDataStructureTest
 	{
 	public:
-		virtual void test(void) const = 0;
+		virtual void test(void) = 0;
 	};
 
 

@@ -26,7 +26,7 @@ namespace datastructures
 		void insertAfter(const Object& obj, const Object& after);
 		void insertBefore(const Object& obj, const Object& before);
 		void remove(const Object& obj);
-		void test(void) const;
+		void test(void);
 
 	public:
 		bool isEmpty(void) const;
@@ -36,6 +36,9 @@ namespace datastructures
 
 	public:
 		const Object& first(void) const;
+
+	private:
+		void testOutputContents(void);
 
 	private:
 		int m_size;
@@ -235,8 +238,80 @@ namespace datastructures
 	}
 
 	template<typename Object>
-	inline void SingleLinkList<Object>::test(void) const
+	inline void SingleLinkList<Object>::test(void)
 	{
+		//System.out.println("SingleLinkList______________________");
+
+		//System.out.println("is empty : " + isEmpty());
+		//System.out.println("adding letters a thru m to the list");
+
+		//add('a');
+		//add('b');
+		//add('c');
+		//add('d');
+		//add('e');
+		//add('f');
+		//add('g');
+		//add('h');
+		//add('i');
+		//add('j');
+		//add('k');
+		//add('n');
+		//add('m');
+
+		//testOutputContents();
+
+		//System.out.println("is empty : " + isEmpty());
+
+		//System.out.print("adding a 'y' to the end | ");
+
+		//addLast('y');
+
+		//testOutputContents();
+
+		//System.out.print("removing e | ");
+
+		//remove('e');
+
+		//testOutputContents();
+
+		//System.out.print("removing m | ");
+
+		//remove('m');
+
+		//testOutputContents();
+
+		//System.out.print("adding z before f | ");
+
+		//insertBefore('z', 'f');
+
+		//testOutputContents();
+
+		//System.out.print("adding q after z | ");
+
+		//insertAfter('q', 'z');
+
+		//testOutputContents();
+
+		//System.out.println("SingleLinkList______________________");
+	}
+
+
+	template<typename Object>
+	void SingleLinkList<Object>::testOutputContents(void) {
+		//System.out.print("count:" + size());
+
+		//Node runner = root;
+
+		//System.out.print(" contents:");
+
+		//while (runner != null) {
+		//	System.out.print(runner.getValue() + " ");
+
+		//	runner = runner.next;
+		//}
+
+		//System.out.println(" ");
 	}
 
 	template<typename Object>
