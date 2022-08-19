@@ -219,13 +219,18 @@ namespace datastructures
 	template<typename Object>
 	inline void SingleLinkList<Object>::remove(const Object& obj)
 	{
-		Node* ptrRunner = m_ptrRoot, *ptrPrevious = m_ptrRoot;
+		Node* ptrRunner = m_ptrRoot, *ptrPrevious = 0;
 
 		while (ptrRunner != 0)
 		{
 			if (ptrRunner->getValue() == obj)
 			{
-				ptrPrevious->m_ptrNext = ptrRunner->m_ptrNext;
+				if (ptrPrevious != 0)
+					ptrPrevious->m_ptrNext = ptrRunner->m_ptrNext;
+
+				else
+					m_ptrRoot = m_ptrRoot->m_ptrNext;
+
 				delete[] ptrRunner;
 				--m_size;
 				return;
@@ -259,17 +264,17 @@ namespace datastructures
 
 		TestOutputContents(tmp);
 
-		//System.out.print("removing e | ");
+		cout << "removing e | ";
 
-		//remove('e');
+		tmp.remove('e');
 
-		//testOutputContents();
+		TestOutputContents(tmp);
 
-		//System.out.print("removing m | ");
+		cout << "removing m | ";
 
-		//remove('m');
+		tmp.remove('m');
 
-		//testOutputContents();
+		TestOutputContents(tmp);
 
 		//System.out.print("adding z before f | ");
 
