@@ -9,7 +9,7 @@ namespace datastructures
 	class SingleLinkList :
 		public ISingleLinkList<Object>, public IDataStructureTest
 	{
-		friend void TestOutputContents(const SingleLinkList<char>& list);
+		friend void TestOutputContents(SingleLinkList<char> list);
 
 	private:
 		class Node;
@@ -44,10 +44,13 @@ namespace datastructures
 		Node* m_ptrRoot;
 
 	private:
+		void passByValueHelper(SingleLinkList<Object>* ptrList, const Node* ptrNode);
+
+	private:
 		class Node
 		{
 			friend class SingleLinkList<Object>;
-			friend void TestOutputContents(const SingleLinkList<char>& list);
+			friend void TestOutputContents(SingleLinkList<char> list);
 
 		protected:
 			Node* m_ptrNext;
@@ -107,21 +110,20 @@ namespace datastructures
 	template<typename Object>
 	inline SingleLinkList<Object>::SingleLinkList(const SingleLinkList& passByValueList)
 	{
-		/// <summary>
-		/// THIS IS WRONG WILL POPULATE LIST BACKWARDS
-		/// </summary>
-		/// <typeparam name="Object"></typeparam>
-		/// <param name="passByValueList"></param>
 		m_size = 0;
 		m_ptrRoot = 0;
 
-		Node* ptrRunner = passByValueList.m_ptrRoot;
+		if (passByValueList.m_ptrRoot != 0)
+			passByValueHelper(this, passByValueList.m_ptrRoot);
+	}
 
-		while (ptrRunner != 0)
-		{
-			add(ptrRunner->getValue());
-			ptrRunner = ptrRunner->m_ptrNext;
-		}
+	template<typename Object>
+	inline void datastructures::SingleLinkList<Object>::passByValueHelper(SingleLinkList<Object> * ptrList, const Node * ptrNode)
+	{
+		if (ptrNode->m_ptrNext != 0)
+			passByValueHelper(ptrList, ptrNode->m_ptrNext);
+
+		ptrList->add(ptrNode->getValue());
 	}
 
 	template<typename Object>
@@ -254,9 +256,9 @@ namespace datastructures
 		SingleLinkList<char> tmp;
 		cout << "SingleLinkList______________________" << endl;
 		cout << "is empty : " << tmp.isEmpty()<< endl;
-		cout << "adding letters a thru m to the list" << endl;
+		cout << "adding letters a thru n to the list" << endl;
 
-		for (char k = 'a'; k <= 'm'; k++)
+		for (char k = 'a'; k <= 'n'; k++)
 			tmp.add(k);
 
 		TestOutputContents(tmp);
@@ -320,7 +322,7 @@ namespace datastructures
 		return m_ptrRoot->getValue();
 	}
 
-	void TestOutputContents(const SingleLinkList<char> & list)
+	void TestOutputContents(SingleLinkList<char> list)
 	{
 		cout << "count:" << list.size();
 		SingleLinkList<char>::Node * ptrRunner = list.m_ptrRoot;
