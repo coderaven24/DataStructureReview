@@ -54,7 +54,7 @@ namespace datastructures
 
 	public:
 		virtual const Object& first(void) const = 0;
-		virtual const Object& Last(void) const = 0;
+		virtual const Object& last(void) const = 0;
 	};
 }
 
