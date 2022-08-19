@@ -198,13 +198,18 @@ namespace datastructures
 	template<typename Object>
 	inline void SingleLinkList<Object>::insertBefore(const Object& obj, const Object& before)
 	{
-		Node* ptrRunner = m_ptrRoot, *ptrPrevious = m_ptrRoot;
+		Node* ptrRunner = m_ptrRoot, *ptrPrevious = 0;
 
 		while (ptrRunner != 0)
 		{
 			if (ptrRunner->getValue() == before)
 			{
-				ptrPrevious->m_ptrNext = new Node(obj, ptrRunner);
+				if(ptrPrevious != 0)
+					ptrPrevious->m_ptrNext = new Node(obj, ptrRunner);
+
+				else
+					m_ptrRoot = new Node(obj, m_ptrRoot);
+
 				++m_size;
 				return;
 			}
@@ -276,19 +281,25 @@ namespace datastructures
 
 		TestOutputContents(tmp);
 
-		//System.out.print("adding z before f | ");
+		cout << "adding z before f | ";
 
-		//insertBefore('z', 'f');
+		tmp.insertBefore('z', 'f');
 
-		//testOutputContents();
+		TestOutputContents(tmp);
 
-		//System.out.print("adding q after z | ");
+		cout << "adding r before l | ";
 
-		//insertAfter('q', 'z');
+		tmp.insertBefore('r', 'l');
 
-		//testOutputContents();
+		TestOutputContents(tmp);
 
-		//System.out.println("SingleLinkList______________________");
+		cout << "adding q after z | ";
+
+		tmp.insertAfter('q', 'z');
+
+		TestOutputContents(tmp);
+
+		cout << "SingleLinkList______________________"<<endl;
 	}
 
 	template<typename Object>
