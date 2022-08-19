@@ -47,6 +47,7 @@ namespace datastructures
 		class Node
 		{
 			friend class SingleLinkList<Object>;
+			friend void TestOutputContents(SingleLinkList<char> list);
 
 		protected:
 			Node* m_ptrNext;
@@ -309,15 +310,13 @@ namespace datastructures
 
 		cout << " contents:";
 
-		//System.out.print(" contents:");
+		while (ptrRunner != 0) {
+			cout << ptrRunner->getValue() << " ";
 
-		//while (runner != null) {
-		//	System.out.print(runner.getValue() + " ");
+			ptrRunner = ptrRunner->m_ptrNext;
+		}
 
-		//	runner = runner.next;
-		//}
-
-		//System.out.println(" ");
+		cout << endl;
 	}
 }
 
