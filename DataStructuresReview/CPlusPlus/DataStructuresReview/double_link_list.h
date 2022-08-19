@@ -83,7 +83,6 @@ namespace datastructures
 
 	}
 
-
 	template<typename Object>
 	inline datastructures::DoubleLinkList<Object>::Node::Node(const Object& obj, Node* ptrPrev, Node* ptrRight) :
 		m_value(obj), m_ptrNext(ptrRight), m_ptrPrev(ptrPrev)
@@ -110,7 +109,6 @@ namespace datastructures
 		return this->m_value;
 	}
 
-
 	template<typename Object>
 	inline datastructures::DoubleLinkList<Object>::DoubleLinkList(void) : 
 		m_ptrHead(0), m_ptrTail(0), m_size(0)
@@ -133,7 +131,6 @@ namespace datastructures
 
 		ptrList->add(ptrNode->getValue());
 	}
-
 
 	template<typename Object>
 	inline datastructures::DoubleLinkList<Object>::~DoubleLinkList(void)
@@ -165,6 +162,15 @@ namespace datastructures
 	template<typename Object>
 	inline void datastructures::DoubleLinkList<Object>::addLast(const Object& obj)
 	{
+		if (this->m_ptrTail != 0)
+		{
+			m_ptrTail = new Node(obj, m_ptrTail, 0);
+			m_ptrTail->m_ptrPrev->m_ptrNext = m_ptrTail;
+		}
+		else
+			m_ptrHead = m_ptrTail = new Node(obj, 0, 0);
+
+		++m_size;
 	}
 
 	template<typename Object>
