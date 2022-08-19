@@ -12,7 +12,7 @@ namespace datastructures
 	class DoubleLinkList :
 		public IDoubleLinkList<Object>, public IDataStructureTest
 	{
-		friend void TestOutputContents(const DoubleLinkList<char>& list);
+		friend void TestOutputContents(DoubleLinkList<char> list);
 
 	private:
 		class Node;
@@ -48,11 +48,15 @@ namespace datastructures
 		Node* m_ptrHead;
 		Node* m_ptrTail;
 
+
+	private:
+		void passByValueHelper(DoubleLinkList<Object>* ptrList, const Node* ptrNode);
+
 	private:
 		class Node
 		{
 			friend class DoubleLinkList <Object>;
-			friend void TestOutputContents(const DoubleLinkList<char>& list);
+			friend void TestOutputContents(DoubleLinkList<char> list);
 
 		protected:
 			Node* m_ptrNext;
@@ -108,23 +112,54 @@ namespace datastructures
 
 
 	template<typename Object>
-	inline datastructures::DoubleLinkList<Object>::DoubleLinkList(void)
+	inline datastructures::DoubleLinkList<Object>::DoubleLinkList(void) : 
+		m_ptrHead(0), m_ptrTail(0), m_size(0)
 	{
 	}
 
 	template<typename Object>
-	inline datastructures::DoubleLinkList<Object>::DoubleLinkList(const DoubleLinkList& passByValueList)
+	inline datastructures::DoubleLinkList<Object>::DoubleLinkList(const DoubleLinkList& passByValueList) :
+		m_ptrHead(0), m_ptrTail(0), m_size(0)
 	{
+		if (passByValueList.m_ptrHead != 0)
+			passByValueHelper(this, passByValueList.m_ptrHead);
 	}
+
+	template<typename Object>
+	inline void datastructures::DoubleLinkList<Object>::passByValueHelper(DoubleLinkList<Object>* ptrList, const Node* ptrNode)
+	{
+		if (ptrNode->m_ptrNext != 0)
+			passByValueHelper(ptrList, ptrNode->m_ptrNext);
+
+		ptrList->add(ptrNode->getValue());
+	}
+
 
 	template<typename Object>
 	inline datastructures::DoubleLinkList<Object>::~DoubleLinkList(void)
 	{
+		Node* ptrRunner = m_ptrHead;
+
+		while (ptrRunner != 0)
+		{
+			Node* ptrCurrent = ptrRunner;
+			ptrRunner = ptrRunner->m_ptrNext;
+			delete[] ptrCurrent;
+		}
 	}
 
 	template<typename Object>
 	inline void datastructures::DoubleLinkList<Object>::add(const Object& obj)
 	{
+		if (this->m_ptrHead != 0)
+		{
+			m_ptrHead = new Node(obj, 0, m_ptrHead);
+			m_ptrHead->m_ptrNext->m_ptrPrev = m_ptrHead;
+		}
+		else
+			m_ptrHead = m_ptrTail = new Node(obj, 0, 0);
+
+		++m_size;
 	}
 
 	template<typename Object>
@@ -135,63 +170,47 @@ namespace datastructures
 	template<typename Object>
 	inline void datastructures::DoubleLinkList<Object>::clear(void)
 	{
+		Node* ptrRunner = m_ptrHead;
+
+		while (ptrRunner != 0)
+		{
+			Node* ptrCurrent = ptrRunner;
+			ptrRunner = ptrRunner->m_ptrNext;
+			delete[] ptrCurrent;
+		}
+
+		m_ptrTail = 0;
+		m_ptrHead = 0;
+		m_size = 0;
 	}
 
 	template<typename Object>
 	inline void datastructures::DoubleLinkList<Object>::insertAfter(const Object& obj, const Object& after)
 	{
+		if (this->m_ptrTail != 0)
+		{
+
+		}
+		else
+			m_ptrHead = m_ptrTail = new Node(obj, 0, 0);
+
+		++m_size;
 	}
 
 	template<typename Object>
 	inline void datastructures::DoubleLinkList<Object>::insertBefore(const Object& obj, const Object& before)
 	{
+
 	}
 
 	template<typename Object>
 	inline void datastructures::DoubleLinkList<Object>::remove(const Object& obj)
 	{
+
 	}
 
 	template<typename Object>
-	inline bool datastructures::DoubleLinkList<Object>::isEmpty(void) const
-	{
-		return false;
-	}
-
-	template<typename Object>
-	inline int datastructures::DoubleLinkList<Object>::size(void) const
-	{
-		return m_size;
-	}
-
-	template<typename Object>
-	inline const Object& datastructures::DoubleLinkList<Object>::first(void) const
-	{
-		return m_ptrHead->getValue();
-	}
-
-	template<typename Object>
-	inline const Object& datastructures::DoubleLinkList<Object>::last(void) const
-	{
-		return m_ptrTail->getValue();
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	template<typename Object>
-	inline void DoubleLinkList<Object>::test(void) 
+	inline void DoubleLinkList<Object>::test(void)
 	{
 		DoubleLinkList<char> tmp;
 		cout << "DoubleLinkList______________________" << endl;
@@ -244,8 +263,31 @@ namespace datastructures
 		cout << "DoubleLinkList______________________" << endl;
 	}
 
+	template<typename Object>
+	inline bool datastructures::DoubleLinkList<Object>::isEmpty(void) const
+	{
+		return m_size == 0;
+	}
 
-	inline void TestOutputContents(const DoubleLinkList<char> & list)
+	template<typename Object>
+	inline int datastructures::DoubleLinkList<Object>::size(void) const
+	{
+		return m_size;
+	}
+
+	template<typename Object>
+	inline const Object& datastructures::DoubleLinkList<Object>::first(void) const
+	{
+		return m_ptrHead->getValue();
+	}
+
+	template<typename Object>
+	inline const Object& datastructures::DoubleLinkList<Object>::last(void) const
+	{
+		return m_ptrTail->getValue();
+	}
+
+	inline void TestOutputContents(DoubleLinkList<char> list)
 	{
 		cout << "count:" << list.size();
 		DoubleLinkList<char>::Node* ptrRunner = list.m_ptrHead;
