@@ -322,7 +322,7 @@ namespace datastructures
 		return m_ptrRoot->getValue();
 	}
 
-	void TestOutputContents(SingleLinkList<char> list)
+	inline void TestOutputContents(SingleLinkList<char> list)
 	{
 		cout << "count:" << list.size();
 		SingleLinkList<char>::Node * ptrRunner = list.m_ptrRoot;
