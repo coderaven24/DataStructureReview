@@ -217,7 +217,28 @@ namespace datastructures
 	template<typename Object>
 	inline void datastructures::DoubleLinkList<Object>::insertBefore(const Object& obj, const Object& before)
 	{
+		Node* ptrRunner = m_ptrHead;
 
+		while (ptrRunner != 0)
+		{
+			if (ptrRunner->m_value == before)
+			{
+				if (this->m_ptrHead != ptrRunner)
+				{
+					ptrRunner->m_ptrPrev->m_ptrNext = new Node(obj, ptrRunner->m_ptrPrev, ptrRunner);
+					ptrRunner->m_ptrPrev = ptrRunner->m_ptrPrev->m_ptrNext;
+				}
+				else
+				{
+					m_ptrHead = new Node(obj, 0, m_ptrHead);
+					m_ptrHead->m_ptrNext->m_ptrPrev = m_ptrHead;
+				}
+
+				++m_size;
+			}
+
+			ptrRunner = ptrRunner->m_ptrNext;
+		}
 	}
 
 	template<typename Object>
