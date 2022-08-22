@@ -18,18 +18,26 @@ public class SingleLinkList implements ISingleLinkList {
 		}
 	}
 
-	private Node root = null;
+	private Node head = null;
+	private Node tail = null;	
 
 	private int size = 0;
 
 	public void add(Object obj) {
-		root = new Node(obj, root);
+		Node tmp = new Node(obj, null);
+				
+		if(head != null)
+			tail.next = tmp;
+		else		
+			head = tmp;
+		
+		tail = tmp;
 		size++;
 	}
 
 	public void addLast(Object obj) {
-		if (root != null) {
-			Node runner = root;
+	/*	if (head != null) {
+			Node runner = head;
 
 			while (runner.next != null)
 				runner = runner.next;
@@ -37,22 +45,23 @@ public class SingleLinkList implements ISingleLinkList {
 			runner.next = new Node(obj, null);
 			size++;
 		} else {
-			root = new Node(obj, root);
+			head = new Node(obj, head);
 			size++;
-		}
+		}*/
 	}
 
 	public void clear() {
 		size = 0;
-		root = null;
+		head = null;
+		tail = null;		
 	}
 
 	public Object first() {
-		return root.value;
+		return head.value;
 	}
 
 	public void insertAfter(Object obj, Object after) {
-		Node runner = root;
+		/*Node runner = head;
 
 		while (runner != null) {
 			if (after == runner.getValue()) {
@@ -62,11 +71,11 @@ public class SingleLinkList implements ISingleLinkList {
 			}
 
 			runner = runner.next;
-		}
+		}*/
 	}
 
 	public void insertBefore(Object obj, Object before) {
-		Node runner = root;
+	/*	Node runner = head;
 		Node previous = null;
 
 		while (runner != null) {
@@ -76,7 +85,7 @@ public class SingleLinkList implements ISingleLinkList {
 					previous.next = new Node(obj, previous.next);
 
 				else
-					root = new Node(obj, root);
+					head = new Node(obj, head);
 
 				++size;
 				return;
@@ -84,7 +93,7 @@ public class SingleLinkList implements ISingleLinkList {
 
 			previous = runner;
 			runner = runner.next;
-		}
+		}*/
 	}
 
 	public boolean isEmpty() {
@@ -92,14 +101,14 @@ public class SingleLinkList implements ISingleLinkList {
 	}
 
 	public void remove(Object obj) {
-		Node runner = root;
+	/*	Node runner = head;
 		Node previous = null;
 
 		while (runner != null) {
 
 			if (obj == runner.getValue()) {
 				if (previous == null)
-					root = runner.next;
+					head = runner.next;
 
 				else
 					previous.next = runner.next;
@@ -110,7 +119,7 @@ public class SingleLinkList implements ISingleLinkList {
 
 			previous = runner;
 			runner = runner.next;
-		}
+		}*/
 	}
 
 	public int size() {
@@ -179,7 +188,7 @@ public class SingleLinkList implements ISingleLinkList {
 	private void testOutputContents() {
 		System.out.print("count:" + size());
 
-		Node runner = root;
+		Node runner = head;
 
 		System.out.print(" contents:");
 
