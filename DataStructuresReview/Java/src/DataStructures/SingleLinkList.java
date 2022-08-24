@@ -21,7 +21,7 @@ public class SingleLinkList implements ISingleLinkList {
 	private Node tail = null;
 	private int size = 0;
 	
-	public void append(Object obj) {
+	public void prepend(Object obj) {
 		head  = new Node(obj, head);
 		
 		if(tail == null)		
@@ -30,7 +30,7 @@ public class SingleLinkList implements ISingleLinkList {
 		size++;
 	}	
 
-	public void prepend(Object obj) {
+	public void append(Object obj) {
 		Node tmp = new Node(obj, null);
 				
 		if(head != null)
@@ -53,7 +53,26 @@ public class SingleLinkList implements ISingleLinkList {
 	}
 
 	public void insertAfter(Object obj, Object after) {
+		Node runner = head;
 
+		while (runner != null)
+		{
+			if (runner.value != after)
+			{
+				runner = runner.next;
+			}
+			else
+			{
+				Node temp = runner.next;
+				runner.next = new Node(obj, temp);
+				++size;
+
+				if (tail == runner)
+					tail = runner.next;
+
+				break;
+			}
+		}
 	}
 
 	public void insertBefore(Object obj, Object before) {

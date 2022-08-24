@@ -12,7 +12,7 @@ namespace datastructures
 	class SingleLinkList :
 		public ISingleLinkList<Object>, public IDataStructureTest
 	{
-		friend void TestOutputContents(SingleLinkList<char> list);
+		friend void TestOutputContents(const SingleLinkList<char>& list);
 
 	private:
 		class Node;
@@ -51,16 +51,15 @@ namespace datastructures
 		class Node
 		{
 			friend class SingleLinkList<Object>;
-			friend void TestOutputContents(SingleLinkList<char> list);
+			friend void TestOutputContents(const SingleLinkList<char>& list);
 
 		protected:
 			Node* mPtrNext;
-			Node* mPtrPrev;
 			Object mValue;
 
 		public:
 			Node(void);
-			Node(const Object& obj, Node* ptrPrev, Node* ptrNext);
+			Node(const Object& obj, Node* ptrNext);
 			Node(const Node& passByValueNode);
 
 		public:
@@ -73,20 +72,20 @@ namespace datastructures
 
 	template<typename Object>
 	inline SingleLinkList<Object>::Node::Node(void) :
-		mPtrNext(0), mPtrPrev(0)
+		mPtrNext(0)
 	{
 	}
 
 	template<typename Object>
-	inline SingleLinkList<Object>::Node::Node(const Object& obj, Node* ptrPrev, Node* ptrNext) :
-		mValue(obj), mPtrPrev(ptrPrev), mPtrNext(ptrNext)
+	inline SingleLinkList<Object>::Node::Node(const Object& obj, Node* ptrNext) :
+		mValue(obj), mPtrNext(ptrNext)
 	{
 
 	}
 
 	template<typename Object>
 	inline SingleLinkList<Object>::Node::Node(const Node& passByValueNode) :
-		mValue(passByValueNode.mValue), mPtrPrev(passByValueNode.mPtrPrev), mPtrNext(passByValueNode.mPtrNext)
+		mValue(passByValueNode.mValue), mPtrNext(passByValueNode.mPtrNext)
 	{
 
 	}
@@ -136,9 +135,9 @@ namespace datastructures
 	}
 
 	template<typename Object>
-	inline void SingleLinkList<Object>::append(const Object& obj)
+	inline void SingleLinkList<Object>::prepend(const Object& obj)
 	{
-		mPtrHead  = new Node(obj, 0, mPtrHead);
+		mPtrHead  = new Node(obj,mPtrHead);
 
 		if(mPtrTail == 0)
 			mPtrTail = mPtrHead;
@@ -147,9 +146,9 @@ namespace datastructures
 	}
 	
 	template<typename Object>
-	inline void SingleLinkList<Object>::prepend(const Object& obj)
+	inline void SingleLinkList<Object>::append(const Object& obj)
 	{
-		Node * ptrTmp = new Node(obj,0,0);
+		Node * ptrTmp = new Node(obj,0);
 
 		if (mPtrHead != 0)
 			mPtrTail->mPtrNext = ptrTmp;
@@ -181,13 +180,48 @@ namespace datastructures
 	template<typename Object>
 	inline void SingleLinkList<Object>::insertAfter(const Object& obj, const Object& after)
 	{
+		Node* ptrRunner = mPtrHead;
 
+		while (ptrRunner != 0)
+		{
+			if (ptrRunner->mValue != after)
+			{
+				ptrRunner = ptrRunner->mPtrNext;
+			}
+			else
+			{
+				Node* ptrTemp = ptrRunner->mPtrNext;
+				ptrRunner->mPtrNext = new Node(obj, ptrTemp);
+				++mSize;
+
+				if (mPtrTail == ptrRunner)
+					mPtrTail = ptrRunner->mPtrNext;
+
+				break;
+			}
+		}
 	}
 
 	template<typename Object>
 	inline void SingleLinkList<Object>::insertBefore(const Object& obj, const Object& before)
 	{
+		Node* ptrRunner = mPtrHead;
+		Node* ptrPrev = 0;
 
+		while (ptrRunner != 0)
+		{
+			if (ptrRunner->mValue != before)
+			{
+				ptrPrev = ptrRunner;
+				ptrRunner = ptrRunner->mPtrNext;
+			}
+			else
+			{
+
+
+				break;
+			}
+		}
 	}
 
 	template<typename Object>
@@ -259,16 +293,22 @@ namespace datastructures
 
 		TestOutputContents(tmp);
 
-		cout << "adding q after z | ";
+		cout << "adding q after n | ";
 
-		tmp.insertAfter('q', 'z');
+		tmp.insertAfter('q', 'n');
+
+		TestOutputContents(tmp);
+
+		cout << "adding 3 after m | ";
+
+		tmp.insertAfter('3', 'm');
 
 		TestOutputContents(tmp);
 
 		cout << "SingleLinkList______________________" << endl;
 	}
 
-	inline void TestOutputContents(SingleLinkList<char> list)
+	inline void TestOutputContents(const SingleLinkList<char> & list)
 	{
 		cout << "count:" << list.size();
 		SingleLinkList<char>::Node* ptrRunner = list.mPtrHead;
