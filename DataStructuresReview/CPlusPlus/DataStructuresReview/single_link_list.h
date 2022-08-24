@@ -243,6 +243,7 @@ namespace datastructures
 				if (ptrRunner == mPtrTail)
 					mPtrTail = ptrPrev;
 
+				delete[] ptrRunner;
 				break;
 			}
 
