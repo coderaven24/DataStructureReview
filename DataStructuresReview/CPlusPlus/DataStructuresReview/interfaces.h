@@ -40,8 +40,8 @@ namespace datastructures
 	class IDoubleLinkList
 	{
 	public:
-		virtual void add(const Object& obj) = 0;
-		virtual void addLast(const Object& obj) = 0;
+		virtual void append(const Object& obj) = 0;
+		virtual void prepend(const Object& obj) = 0;
 		virtual void clear(void) = 0;
 		virtual void insertAfter(const Object& obj, const Object& after) = 0;
 		virtual void insertBefore(const Object& obj, const Object& before) = 0;
