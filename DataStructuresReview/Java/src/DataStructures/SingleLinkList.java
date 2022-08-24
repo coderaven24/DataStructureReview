@@ -20,8 +20,17 @@ public class SingleLinkList implements ISingleLinkList {
 	private Node head = null;
 	private Node tail = null;
 	private int size = 0;
-
+	
 	public void append(Object obj) {
+		head  = new Node(obj, head);
+		
+		if(tail == null)		
+			tail = head;
+		
+		size++;
+	}	
+
+	public void prepend(Object obj) {
 		Node tmp = new Node(obj, null);
 				
 		if(head != null)
@@ -30,15 +39,6 @@ public class SingleLinkList implements ISingleLinkList {
 			head = tmp;
 		
 		tail = tmp;
-		size++;
-	}
-
-	public void prepend(Object obj) {
-		head  = new Node(obj, head);
-		
-		if(tail == null)		
-			tail = head;
-		
 		size++;
 	}
 
@@ -91,7 +91,6 @@ public class SingleLinkList implements ISingleLinkList {
 		return size;
 	}
 
-	@Override
 	public void test() {
 		System.out.println("SingleLinkList______________________");
 

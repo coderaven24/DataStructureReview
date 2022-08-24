@@ -25,8 +25,8 @@ namespace datastructures
 		virtual ~SingleLinkList(void);
 
 	public:
-		void add(const Object& obj);
-		void addLast(const Object& obj);
+		void append(const Object& obj);
+		void prepend(const Object& obj);
 		void clear(void);
 		void insertAfter(const Object& obj, const Object& after);
 		void insertBefore(const Object& obj, const Object& before);
@@ -45,6 +45,7 @@ namespace datastructures
 	private:
 		int m_size;
 		Node* m_ptrHead;
+		Node* m_ptrTail;
 
 	private:
 		void passByValueHelper(SingleLinkList<Object>* ptrList, const Node* ptrNode);
@@ -57,11 +58,12 @@ namespace datastructures
 
 		protected:
 			Node* m_ptrNext;
+			Node* m_ptrPrev;
 			Object m_value;
 
 		public:
 			Node(void);
-			Node(const Object& obj, Node* ptrRight);
+			Node(const Object& obj, Node* ptrPrev, Node* ptrNext);
 			Node(const Node& passByValueNode);
 
 		public:
@@ -72,26 +74,31 @@ namespace datastructures
 		};
 	};
 
+
+
 	template<typename Object>
 	inline SingleLinkList<Object>::Node::Node(void) :
-		m_ptrNext(0)
+		m_ptrNext(0), m_ptrPrev(0)
 	{
 	}
 
+	
 	template<typename Object>
-	inline SingleLinkList<Object>::Node::Node(const Object& obj, Node* ptrRight) :
-		m_value(obj), m_ptrNext(ptrRight)
+	inline SingleLinkList<Object>::Node::Node(const Object& obj, Node* ptrPrev, Node* ptrNext) :
+		m_value(obj), m_ptrPrev(ptrPrev), m_ptrNext(ptrNext)
 	{
 
 	}
 
+	
 	template<typename Object>
 	inline SingleLinkList<Object>::Node::Node(const Node& passByValueNode) :
-		m_value(passByValueNode.m_value), m_ptrNext(passByValueNode.m_ptrNext)
+		m_value(passByValueNode.m_value), m_ptrPrev(passByValueNode.m_ptrPrev), m_ptrNext(passByValueNode.m_ptrNext)
 	{
 
 	}
 
+	
 	template<typename Object>
 	inline SingleLinkList<Object>::Node::~Node(void)
 	{
@@ -104,29 +111,34 @@ namespace datastructures
 		return this->m_value;
 	}
 
+	
 	template<typename Object>
 	inline SingleLinkList<Object>::SingleLinkList(void) :
-		m_ptrHead(0), m_size(0)
+		m_ptrHead(0), m_ptrTail(0), m_size(0)
 	{
 	}
 
+
+	
 	template<typename Object>
 	inline SingleLinkList<Object>::SingleLinkList(const SingleLinkList& passByValueList)
 	{
 		m_size = 0;
 		m_ptrHead = 0;
+		m_ptrTail = 0;
 
 		if (passByValueList.m_ptrHead != 0)
 			passByValueHelper(this, passByValueList.m_ptrHead);
 	}
 
+	
 	template<typename Object>
 	inline void datastructures::SingleLinkList<Object>::passByValueHelper(SingleLinkList<Object> * ptrList, const Node * ptrNode)
 	{
 		if (ptrNode->m_ptrNext != 0)
 			passByValueHelper(ptrList, ptrNode->m_ptrNext);
 
-		ptrList->add(ptrNode->getValue());
+		ptrList->append(ptrNode->getValue());
 	}
 
 	template<typename Object>
@@ -142,115 +154,74 @@ namespace datastructures
 		}
 	}
 
+
 	template<typename Object>
-	inline void SingleLinkList<Object>::add(const Object& obj)
+	inline void SingleLinkList<Object>::append(const Object& obj)
 	{
-		m_ptrHead = new Node(obj, m_ptrHead);
-		++m_size;
+		m_ptrHead  = new Node(obj, 0, m_ptrHead);
+
+		if(m_ptrTail == 0)
+			m_ptrTail = m_ptrHead;
+
+		m_size++;
 	}
 
+	
 	template<typename Object>
-	inline void SingleLinkList<Object>::addLast(const Object& obj)
+	inline void SingleLinkList<Object>::prepend(const Object& obj)
 	{
+		Node * ptrTmp = new Node(obj,0,0);
+
 		if (m_ptrHead != 0)
-		{
-			Node* ptrRunner = m_ptrHead;
+			m_ptrTail->m_ptrNext = ptrTmp;
 
-			while (ptrRunner->m_ptrNext != 0)
-				ptrRunner = ptrRunner->m_ptrNext;
-
-			ptrRunner->m_ptrNext = new Node(obj, 0);
-			++m_size;
-		}
 		else
-			add(obj);
+			m_ptrHead = ptrTmp;
+
+		m_ptrTail = ptrTmp;
+		m_size++;
 	}
 
 	template<typename Object>
 	inline void SingleLinkList<Object>::clear(void)
 	{
-		Node* ptrRunner = m_ptrHead;
 
-		while (ptrRunner != 0)
-		{
-			Node* ptrCurrent = ptrRunner;
-			ptrRunner = ptrRunner->m_ptrNext;
-			delete[] ptrCurrent;
-		}
-
-		m_ptrHead = 0;
-		m_size = 0;
 	}
 
 	template<typename Object>
 	inline void SingleLinkList<Object>::insertAfter(const Object& obj, const Object& after)
 	{
-		Node* ptrRunner = m_ptrHead;
 
-		while (ptrRunner != 0)
-		{
-			if (ptrRunner->getValue() == after)
-			{
-				ptrRunner->m_ptrNext = new Node(obj, ptrRunner->m_ptrNext);
-				++m_size;
-				return;
-			}
-			else
-				ptrRunner = ptrRunner->m_ptrNext;
-		}
 	}
 
 	template<typename Object>
 	inline void SingleLinkList<Object>::insertBefore(const Object& obj, const Object& before)
 	{
-		Node* ptrRunner = m_ptrHead, *ptrPrevious = 0;
 
-		while (ptrRunner != 0)
-		{
-			if (ptrRunner->getValue() == before)
-			{
-				if(ptrPrevious != 0)
-					ptrPrevious->m_ptrNext = new Node(obj, ptrRunner);
-
-				else
-					m_ptrHead = new Node(obj, m_ptrHead);
-
-				++m_size;
-				return;
-			}
-			else
-			{
-				ptrPrevious = ptrRunner;
-				ptrRunner = ptrRunner->m_ptrNext;
-			}
-		}
 	}
 
 	template<typename Object>
 	inline void SingleLinkList<Object>::remove(const Object& obj)
 	{
-		Node* ptrRunner = m_ptrHead, *ptrPrevious = 0;
 
-		while (ptrRunner != 0)
-		{
-			if (ptrRunner->getValue() == obj)
-			{
-				if (ptrPrevious != 0)
-					ptrPrevious->m_ptrNext = ptrRunner->m_ptrNext;
+	}
 
-				else
-					m_ptrHead = m_ptrHead->m_ptrNext;
+	template<typename Object>
+	inline bool SingleLinkList<Object>::isEmpty(void) const
+	{
+		return m_size == 0;
+	}
 
-				delete[] ptrRunner;
-				--m_size;
-				return;
-			}
-			else
-			{
-				ptrPrevious = ptrRunner;
-				ptrRunner = ptrRunner->m_ptrNext;
-			}
-		}
+	template<typename Object>
+	inline int SingleLinkList<Object>::size(void) const
+	{
+		return m_size;
+	}
+
+	template<typename Object>
+	inline const Object& SingleLinkList<Object>::first(void) const
+	{
+		return m_ptrHead->getValue();
 	}
 
 	template<typename Object>
@@ -258,19 +229,19 @@ namespace datastructures
 	{
 		SingleLinkList<char> tmp;
 		cout << "SingleLinkList______________________" << endl;
-		cout << "is empty : " << tmp.isEmpty()<< endl;
+		cout << "is empty : " << tmp.isEmpty() << endl;
 		cout << "adding letters a thru n to the list" << endl;
 
 		for (char k = 'a'; k <= 'n'; k++)
-			tmp.add(k);
+			tmp.append(k);
 
 		TestOutputContents(tmp);
 
 		cout << "is empty : " << tmp.isEmpty() << endl;
 
-		cout << "adding a 'y' to the end | ";
+		cout << "adding a 'y' to the front | ";
 
-		tmp.addLast('y');
+		tmp.prepend('y');
 
 		TestOutputContents(tmp);
 
@@ -304,31 +275,13 @@ namespace datastructures
 
 		TestOutputContents(tmp);
 
-		cout << "SingleLinkList______________________"<<endl;
-	}
-
-	template<typename Object>
-	inline bool SingleLinkList<Object>::isEmpty(void) const
-	{
-		return m_size == 0;
-	}
-
-	template<typename Object>
-	inline int SingleLinkList<Object>::size(void) const
-	{
-		return m_size;
-	}
-
-	template<typename Object>
-	inline const Object& SingleLinkList<Object>::first(void) const
-	{
-		return m_ptrHead->getValue();
+		cout << "SingleLinkList______________________" << endl;
 	}
 
 	inline void TestOutputContents(SingleLinkList<char> list)
 	{
 		cout << "count:" << list.size();
-		SingleLinkList<char>::Node * ptrRunner = list.m_ptrHead;
+		SingleLinkList<char>::Node* ptrRunner = list.m_ptrHead;
 
 		cout << " contents:";
 
