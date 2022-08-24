@@ -8,6 +8,8 @@ public interface ISingleLinkList extends IDataStructureTest {
 	public void clear();
 
 	public Object first();
+	
+	public Object last();	
 
 	public void insertAfter(Object obj, Object after);
 

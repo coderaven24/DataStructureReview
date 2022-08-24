@@ -52,6 +52,10 @@ public class SingleLinkList implements ISingleLinkList {
 		return head.value;
 	}
 
+	public Object last() {
+		return tail.value;
+	}
+		
 	public void insertAfter(Object obj, Object after) {
 		Node runner = head;
 

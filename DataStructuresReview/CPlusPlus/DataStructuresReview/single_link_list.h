@@ -41,6 +41,7 @@ namespace datastructures
 
 	public:
 		const Object& first(void) const;
+		const Object& last(void) const;
 
 	private:
 		int mSize;
@@ -273,6 +274,12 @@ namespace datastructures
 	inline const Object& SingleLinkList<Object>::first(void) const
 	{
 		return mPtrHead->getValue();
+	}
+
+	template<typename Object>
+	inline const Object& SingleLinkList<Object>::last(void) const
+	{
+		return mPtrTail->getValue();
 	}
 
 	template<typename Object>
