@@ -227,7 +227,28 @@ namespace datastructures
 	template<typename Object>
 	inline void SingleLinkList<Object>::remove(const Object& obj)
 	{
+		Node* ptrRunner = mPtrHead;
+		Node* ptrPrev = 0;
 
+		while (ptrRunner != 0)
+		{
+			if (ptrRunner->mValue == obj)
+			{
+				if (ptrRunner == mPtrHead)
+					mPtrHead = ptrRunner->mPtrNext;
+
+				else
+					ptrPrev->mPtrNext = ptrRunner->mPtrNext;
+
+				if (ptrRunner == mPtrTail)
+					mPtrTail = ptrPrev;
+
+				break;
+			}
+
+			ptrPrev = ptrRunner;
+			ptrRunner = ptrRunner->mPtrNext;
+		}
 	}
 
 	template<typename Object>

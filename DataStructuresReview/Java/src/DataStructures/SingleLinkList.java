@@ -87,22 +87,24 @@ public class SingleLinkList implements ISingleLinkList {
 		Node runner = head;
 		Node prev = null;
 		
-		while(runner != null && runner.value != obj)
+		while(runner != null)
 		{
+			if(runner.value == obj)
+			{
+				if(runner== head)
+					head = runner.next;
+				
+				else
+					prev.next = runner.next;
+				
+				if(runner == tail)
+					tail = prev;
+				
+				break;
+			}				
+				
 			prev = runner;
 			runner = runner.next;
-		}
-		
-		if(runner != null)
-		{
-			if(runner== head)
-				head = runner.next;
-			
-			else
-				prev.next = runner.next;
-			
-			if(runner == tail)
-				tail = prev;	
 		}	
 	}
 
