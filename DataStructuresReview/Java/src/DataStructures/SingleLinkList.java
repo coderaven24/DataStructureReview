@@ -3,7 +3,6 @@ package DataStructures;
 import DataStructures.Interfaces.ISingleLinkList;
 
 public class SingleLinkList implements ISingleLinkList {
-
 	private class Node {
 		private Node next = null;
 		private Object value = null;
@@ -19,11 +18,10 @@ public class SingleLinkList implements ISingleLinkList {
 	}
 
 	private Node head = null;
-	private Node tail = null;	
-
+	private Node tail = null;
 	private int size = 0;
 
-	public void add(Object obj) {
+	public void append(Object obj) {
 		Node tmp = new Node(obj, null);
 				
 		if(head != null)
@@ -35,19 +33,13 @@ public class SingleLinkList implements ISingleLinkList {
 		size++;
 	}
 
-	public void addLast(Object obj) {
-	/*	if (head != null) {
-			Node runner = head;
-
-			while (runner.next != null)
-				runner = runner.next;
-
-			runner.next = new Node(obj, null);
-			size++;
-		} else {
-			head = new Node(obj, head);
-			size++;
-		}*/
+	public void prepend(Object obj) {
+		head  = new Node(obj, head);
+		
+		if(tail == null)		
+			tail = head;
+		
+		size++;
 	}
 
 	public void clear() {
@@ -61,39 +53,11 @@ public class SingleLinkList implements ISingleLinkList {
 	}
 
 	public void insertAfter(Object obj, Object after) {
-		/*Node runner = head;
 
-		while (runner != null) {
-			if (after == runner.getValue()) {
-				runner.next = new Node(obj, runner.next);
-				size++;
-				return;
-			}
-
-			runner = runner.next;
-		}*/
 	}
 
 	public void insertBefore(Object obj, Object before) {
-	/*	Node runner = head;
-		Node previous = null;
 
-		while (runner != null) {
-			if (before == runner.getValue()) {
-
-				if (previous != null)
-					previous.next = new Node(obj, previous.next);
-
-				else
-					head = new Node(obj, head);
-
-				++size;
-				return;
-			}
-
-			previous = runner;
-			runner = runner.next;
-		}*/
 	}
 
 	public boolean isEmpty() {
@@ -101,25 +65,26 @@ public class SingleLinkList implements ISingleLinkList {
 	}
 
 	public void remove(Object obj) {
-	/*	Node runner = head;
-		Node previous = null;
-
-		while (runner != null) {
-
-			if (obj == runner.getValue()) {
-				if (previous == null)
-					head = runner.next;
-
-				else
-					previous.next = runner.next;
-
-				--size;
-				return;
-			}
-
-			previous = runner;
+		Node runner = head;
+		Node prev = null;
+		
+		while(runner != null && runner.value != obj)
+		{
+			prev = runner;
 			runner = runner.next;
-		}*/
+		}
+		
+		if(runner != null)
+		{
+			if(runner== head)
+				head = runner.next;
+			
+			else
+				prev.next = runner.next;
+			
+			if(runner == tail)
+				tail = prev;	
+		}	
 	}
 
 	public int size() {
@@ -133,27 +98,27 @@ public class SingleLinkList implements ISingleLinkList {
 		System.out.println("is empty : " + isEmpty());
 		System.out.println("adding letters a thru m to the list");
 
-		add('a');
-		add('b');
-		add('c');
-		add('d');
-		add('e');
-		add('f');
-		add('g');
-		add('h');
-		add('i');
-		add('j');
-		add('k');
-		add('n');
-		add('m');
+		append('a');
+		append('b');
+		append('c');
+		append('d');
+		append('e');
+		append('f');
+		append('g');
+		append('h');
+		append('i');
+		append('j');
+		append('k');
+		append('n');
+		append('m');
 
 		testOutputContents();
 
 		System.out.println("is empty : " + isEmpty());
 
-		System.out.print("adding a 'y' to the end | ");
+		System.out.print("adding a 'y' to the front | ");
 
-		addLast('y');
+		prepend('y');
 
 		testOutputContents();
 
