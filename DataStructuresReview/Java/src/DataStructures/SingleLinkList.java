@@ -76,7 +76,29 @@ public class SingleLinkList implements ISingleLinkList {
 	}
 
 	public void insertBefore(Object obj, Object before) {
+		Node runner = head;
+		Node prev = null;
 
+		while (runner != null)
+		{
+			if (runner.value != before)
+			{
+				prev = runner;
+				runner = runner.next;
+			}
+			else
+			{
+				if (prev == null)
+					head = new Node(obj, head);
+
+				else
+					prev.next = new Node(obj, prev.next);
+
+				++size;
+
+				break;
+			}
+		}
 	}
 
 	public boolean isEmpty() {

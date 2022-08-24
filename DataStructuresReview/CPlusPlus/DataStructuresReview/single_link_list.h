@@ -185,9 +185,8 @@ namespace datastructures
 		while (ptrRunner != 0)
 		{
 			if (ptrRunner->mValue != after)
-			{
 				ptrRunner = ptrRunner->mPtrNext;
-			}
+
 			else
 			{
 				Node* ptrTemp = ptrRunner->mPtrNext;
@@ -217,7 +216,13 @@ namespace datastructures
 			}
 			else
 			{
+				if (ptrPrev == 0)
+					mPtrHead = new Node(obj, mPtrHead);
 
+				else
+					ptrPrev->mPtrNext = new Node(obj, ptrPrev->mPtrNext);
+
+				++mSize;
 
 				break;
 			}
@@ -274,7 +279,7 @@ namespace datastructures
 	inline void SingleLinkList<Object>::test(void)
 	{
 		SingleLinkList<char> tmp;
-		cout << "SingleLinkList______________________" << endl;
+		cout << "SingleLinkList____________________________________________" << endl;
 		cout << "is empty : " << tmp.isEmpty() << endl;
 		cout << "adding letters a thru n to the list" << endl;
 
@@ -321,13 +326,13 @@ namespace datastructures
 
 		TestOutputContents(tmp);
 
-		cout << "adding 3 after m | ";
+		cout << "adding 3 after n | ";
 
-		tmp.insertAfter('3', 'm');
+		tmp.insertAfter('3', 'n');
 
 		TestOutputContents(tmp);
 
-		cout << "SingleLinkList______________________" << endl;
+		cout << "SingleLinkList____________________________________________" << endl;
 	}
 
 	inline void TestOutputContents(const SingleLinkList<char> & list)
