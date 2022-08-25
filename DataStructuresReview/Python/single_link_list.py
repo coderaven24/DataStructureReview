@@ -41,7 +41,7 @@ class SingleLinkList(ISingleLinkList):
         return self.__head.datum;
 
     def last(self):
-        return
+        return self.__tail.datum;
 
     def insert_after(self,obj,after):
         return
@@ -53,7 +53,24 @@ class SingleLinkList(ISingleLinkList):
         return self.__size == 0
 
     def remove(self,obj):
-        return
+        runner = self.__head
+        prev = None;
+
+        while (runner !=  None) :
+            if (runner.datum == obj) :
+                if (runner == self.__head) :
+                    self.__head = runner.next
+
+                else :
+                    prev.next = runner.next
+
+                if (runner == self.__tail) :
+                    self.__tail = prev
+
+                break;
+
+            prev = runner;
+            runner = runner.next;
 
     def get_size(self):
         return self.__size
@@ -76,23 +93,23 @@ class SingleLinkList(ISingleLinkList):
         self.append('n')
         self.append('m')
         self.test_output_contents()   
-        print("is empty : ", self.is_empty());
-        print("adding a 'y' to the front | ");
-        self.prepend('y');
-        self.test_output_contents();
-        print("removing e | ");
-        self.remove('e');
-        self.test_output_contents();
-        print("removing m | ");
-        self.remove('m');
-        self.test_output_contents();
-        print("adding z before f | ");
-        self.insert_before('z', 'f');
-        self.test_output_contents();
-        print("adding q after z | ");
-        self.insert_after('q', 'z');
-        self.test_output_contents();
-        print("SingleLinkList______________________");        
+        print("is empty : ", self.is_empty())
+        print("adding a 'y' to the front | ")
+        self.prepend('y')
+        self.test_output_contents()
+        print("removing e | ")
+        self.remove('e')
+        self.test_output_contents()
+        print("removing m | ")
+        self.remove('m')
+        self.test_output_contents()
+        print("adding z before f | ")
+        self.insert_before('z', 'f')
+        self.test_output_contents()
+        print("adding q after z | ")
+        self.insert_after('q', 'z')
+        self.test_output_contents()
+        print("SingleLinkList______________________")  
 
     def test_output_contents(self):
         print("count: ",self.get_size())

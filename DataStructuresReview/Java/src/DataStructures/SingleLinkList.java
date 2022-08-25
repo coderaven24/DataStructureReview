@@ -140,7 +140,6 @@ public class SingleLinkList implements ISingleLinkList {
 
 	public void test() {
 		System.out.println("SingleLinkList______________________");
-
 		System.out.println("is empty : " + isEmpty());
 		System.out.println("adding letters a thru m to the list");
 
