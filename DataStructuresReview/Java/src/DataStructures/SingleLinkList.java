@@ -126,6 +126,7 @@ public class SingleLinkList implements ISingleLinkList {
 				if(runner == tail)
 					tail = prev;
 				
+		        size--;
 				break;
 			}				
 				
