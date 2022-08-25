@@ -1,12 +1,9 @@
-from interfaces import ISingleLinkList
-
-
 class Node :
     def __init__(self,obj,next):
         self.datum = obj
         self.next = next
 
-class SingleLinkList(ISingleLinkList):
+class SingleLinkList():
     def __init__(self):
         self.__head = None
         self.__tail = None
