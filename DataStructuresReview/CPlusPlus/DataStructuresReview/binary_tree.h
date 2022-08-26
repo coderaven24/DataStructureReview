@@ -11,7 +11,7 @@ namespace datastructures
 	template <typename Object>
 	class BinaryTree
 	{
-	public:
+	private:
 		class Node
 		{
 			friend class BinaryTree<Object>;
