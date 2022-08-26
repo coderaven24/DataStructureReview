@@ -14,11 +14,13 @@ namespace datastructures
 	public:
 		class Node
 		{
-		public:
+			friend class BinaryTree<Object>;
+
+		protected:
 			Node(void);
 			Node(const Object& datum);
 
-		public:
+		protected:
 			Node* mPtrLeft;
 			Node* mPtrRight;
 			Object mDatum;
