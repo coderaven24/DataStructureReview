@@ -130,6 +130,7 @@
     <ClCompile Include="driver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="binary_tree.h" />
     <ClInclude Include="double_link_list.h" />
     <ClInclude Include="interfaces.h" />
     <ClInclude Include="single_link_list.h" />
